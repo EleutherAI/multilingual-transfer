@@ -36,7 +36,13 @@ tokenizer = AutoTokenizer.from_pretrained(config['tokenizer_name'])
 # model = GPTNeoForCausalLM.from_pretrained('/home/gpt-neo-125m/gpt-neo-125M')
 model = GPTNeoForCausalLM.from_pretrained(config['model_name'], cache_dir=config['model_name'].split('/')[-1])
 
+# for h in model.transformer.h:
+#     for p in h.parameters():
+#         p.requires_grad = False 
+
 model.config.eos_token_id = tokenizer.eos_token_id
+model.config.bos_token_id = tokenizer.bos_token_id
+
 model.resize_token_embeddings(tokenizer.vocab_size)
 model.transformer.wte.weight.requires_grad = True
 
@@ -117,7 +123,7 @@ if dist.get_rank() == 0:
     wandb.init(
         config=config,
         name=f"{config['experiment']['type']}-{config['experiment']['name']}",
-        project="Recycle-GPT-Training",
+        project="Recycle-GPT-Training_wo_freezing",
     )
 
 

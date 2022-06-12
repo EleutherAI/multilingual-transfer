@@ -47,8 +47,8 @@
         "max_eval_steps": 200
     },
     "training": {
-        "train_micro_batch_size_per_gpu": 24,
-        "gradient_accumulation_steps": 128,
+        "train_micro_batch_size_per_gpu": 4,
+        "gradient_accumulation_steps": 10,
         "optimizer": {
             "type": "Adam",
             "params": {
